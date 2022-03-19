@@ -1,0 +1,25 @@
+body{
+    margin : 0;
+    
+}
+ul{
+    list-style: None;
+}
+li{
+    float : left;
+    margin : 5px;
+}
+.header{
+    border : solid 10px gray;
+    height: 100px;
+}
+.logo{
+    float : left;
+    width : 20%;
+    height: 100px;
+}
+.menu_bar{
+    float : left;
+    width : 80%;
+    height: 100px;
+}
