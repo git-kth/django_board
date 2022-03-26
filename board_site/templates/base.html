@@ -2,22 +2,23 @@
 <html>
     <head>
         <title>Project</title>
-        <link rel="stylesheet" href="{% static 'style.css' %}">
+        <link rel="stylesheet" href="{% static 'style.css' %}?after">
     </head>
     <body>
     <div class="header">
         <div class="logo">
-            
+            <button class="home_btn">Home</button>
         </div>
         <div class="menu_bar">
             <ul>
                 <li><a href="../board">게시판</a></li>
-                <li>?</li>
+                <li>두번째</li>
+                <li>세번째</li>
             </ul>
         </div>
     </div>
     <div>
-        {% block content %} 
+        {% block content %}
         {% endblock content %}
     </div>
     </body>

@@ -1,0 +1,16 @@
+.themed-container-notice {
+    padding: .75rem;
+    margin-bottom: 1.0rem;
+    background-color: #cee5d5;
+    border: 1px solid #a7e0e1;
+}
+
+.themed-container-documents {
+    padding: .75rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #000000;
+}
+
+lead > board-title:hover {
+    text-decoration: underline;
+}
