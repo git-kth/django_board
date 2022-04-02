@@ -1,4 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block content %}
 
 
 <!doctype html>
@@ -18,19 +20,32 @@
     <p class="lead">
         글쓰기
     </p>
-    <form method="post">
-        <input type="text">제목
-        <textarea id="summernote" name="editordata"></textarea>
+    {% if board_obj %}
+        <form method="post" action="{% url 'board:update' board_obj.id %}">
+    {% else %}
+        <form method="post" action="{% url 'board:add' %}">
+    {% endif %}
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="name" placeholder="#" value="{{ board_obj.name }}">
+            <label for="floatingInput">작성자</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="title" placeholder="#" value="{{ board_obj.title }}">
+            <label for="floatingInput">제목</label>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" placeholder="#" name="contents" style="height: 300px">{{board_obj.contents}}</textarea>
+            <label for="floatingTextarea2">내용</label>
+        </div>
+        <a class="btn btn-primary" href="{% url 'board:index' %}">취소</a>
+        <input class="btn btn-primary" type="submit" value="등록">
     </form>
-  <script>
-    $(document).ready(function() {
-        $('#summernote').summernote();
-    });
   </script>
-    <a class="btn btn-primary" href="{% url 'board:index' %}">취소</a>
-    <a class="btn btn-primary" href="{% url 'board:index' %}">등록</a>
 </main>
     </body>
 
 
 </html>
+
+{% endblock %}

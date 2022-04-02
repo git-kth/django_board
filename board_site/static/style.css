@@ -7,14 +7,14 @@ ul{
 }
 li{
     float : left;
-    padding: 20px;
     width: 80px;
 }
-li a{
+a{
     text-decoration: None;
+    color : rgb(34, 179, 195);
 }
 .header{
-    position: fixed;
+    /* position: fixed; */
     border : solid 10px greenyellow;
     width: 100%;
     height: 100px;
@@ -22,22 +22,48 @@ li a{
 
 .logo{
     float : left;
-    width : 40%;
-    height: 100px;
+    width : 20%;
+    text-align: center;
+    padding: 20px 0;
 }
 .menu_bar{
-    border : solve 5px blue;
     float : left;
-    width : 60%;
+    width : 80%;
     height: 100px;
+    text-align: center;
+    align-items: center;
+}
+.side_bar{
+    float: left;
+    width : 15%;
+    height : 100%;
+    text-align: center;
+    border : solid 3px black;
+    margin : 0 10 0 0;
+}
+.content{
+    float : left;
+    padding : 10px;
+    width : 84%;
+    height: 100%;
+    border : solid 3px black;
 }
 a:visited{ color: black;}
-a:hover{ color: blue; }
+a:hover{ color: rgb(52, 27, 212); }
 
 .home_btn{
-    width: 50px;
+    width: 70px;
     height: 50px;
-    margin: 25px 0 0 25px;
     cursor: pointer;
-    border: 2px solid black;
+    border-radius: 5px;
+    border: 2px solid black;   
 }
+
+.login_btn{
+    width: 70px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid black;   
+}
+

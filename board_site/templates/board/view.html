@@ -14,18 +14,29 @@
                 {{ board_obj.name }}
                 </div>
                 <div class="col-2">
-                {{ board_obj.create_date }}
+                {% if board_obj.create_date == board_obj.update_date %}
+                    {{ board_obj.create_date|date:'Y-m-d H:i' }}
+
+                {% else %}
+                    {{ board_obj.update_date|date:'Y-m-d H:i' }}
+
+                {% endif %}
                 </div>
                 <div class="col-1">
-                    {{ board_obj.view }}
+                    조회수 {{ board_obj.view }}
                 </div>
             </div>
         </div>
         <div class="themed-container-documents">{{board_obj.contents}}</div>
-            <a class="btn btn-primary" href="{% url 'board:index' %}">목록</a>
-            <input type="text" class="form-control">
-            <a class="btn btn-primary" href="#">등록</a> 
-        </main>
+        <a class="btn btn-primary mb-3" href="{% url 'board:index' %}">목록</a>
+        <a class="btn btn-primary mb-3" href="{% url 'board:delete' board_obj.id %}" style="float: right; margin-left: 6px;">삭제</a>
+        <a class="btn btn-primary mb-3" href="{% url 'board:update_form' board_obj.id %}" style="float: right;">수정</a>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="nameArea" placeholder="#">
+            <label for="floatingInput">댓글</label>
+        </div>
+        <a class="btn btn-primary" href="#">등록</a>
+    </main>
 </body>
 {% endblock %}
 

@@ -9,6 +9,19 @@
                 게시판
             </p>
             <div class="container-fluid themed-container-notice">공지사항</div>
+            
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    정렬
+                </a>
+              
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <li><a class="dropdown-item" href="{% url 'board:index' 'id' %}">최근순</a></li>
+                  <li><a class="dropdown-item" href="{% url 'board:index' 'reverse_id' %}">오래된 순</a></li>
+                  <li><a class="dropdown-item" href="{% url 'board:index' 'view' %}">조회순</a></li>
+                </ul>
+            </div>
+            
             <table class="table">
                 <thead>
                     <tr>
@@ -16,16 +29,24 @@
                         <th>제목</th>
                         <th>글쓴이</th>
                         <th>작성일</th>
+                        <th>조회수</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for obj in reversed_board_obj %}
+                    {% for obj in board_obj %}
                     <tr>
                         <td>{{ obj.id }}</td>
                         <!-- <td><a href="/board/{{obj.id}}">{{ obj.title }}</a></td> -->
-                        <td><a href="{% url 'board:detail' obj.id%}">{{ obj.title }}</a></td>
+                        <td><a href="{% url 'board:detail' obj.id %}">{{ obj.title }}</a></td>
                         <td>{{ obj.name }}</td>
-                        <td>{{ obj.create_date }}</td>
+                        {% if obj.create_date == obj.update_date %}
+                            <td>{{ obj.create_date|date:'Y-m-d H:i' }}</td>
+
+                        {% else %}
+                            <td>{{ obj.update_date|date:'Y-m-d H:i' }}</td>
+
+                        {% endif %}
+                        <td>{{ obj.view }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -33,12 +54,14 @@
             </table>
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                {% for i in board_obj.paginator.page_range %}
+                    <li class="page-item"><a class="page-link" href="{% url 'board:paging' i %}">{{i}}</a></li>
+                {% endfor %}
                 <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
             </ul>
             <a class="btn btn-primary" href="{% url 'board:write' %}">글쓰기</a>
+
+            
         </main>
     </body>
     {% endblock %}

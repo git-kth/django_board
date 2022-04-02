@@ -4,27 +4,43 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
         <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
         <link href="{% static 'css/user-defined.css' %}" rel="stylesheet">
+        <link href="{% static 'style.css' %}?after" rel="stylesheet">
+
     </head>
     <body class="p-3">
-    <div class="header">
-        <div class="logo">
-            <button class="home_btn"><a href="{% url 'index:index' %}">Home</a></button>
+        <div class="header">
+            <div class="logo">
+                <button class="home_btn"><a href="{% url 'index:index' %}">Home</a></button>
+            </div>
+            <div class="menu_bar">
+                <ul>
+                    <li><a href="{% url 'board:index' %}">게시판</a></li>
+                    <li>두번째</li>
+                    <li>세번째</li>
+                </ul>
+            </div>
         </div>
-        <div class="menu_bar">
-            <ul>
-                <li><a href="{% url 'board:index' %}">게시판</a></li>
-                <li>두번째</li>
-                <li>세번째</li>
-            </ul>
+        <div class="side_bar">
+            <div class="profile_info">
+                <ul>
+                {% if user.is_authenticated %}
+                    <br/>
+                    <li>id: {{user.get_username}}</li>
+                    <br/>
+                    <li><button class="login_btn"><a href="{% url 'account:logout'%}?next={{ request.path }}">Logout</a></button></li>
+                {% else %}
+                    <li><button class="login_btn"><a href="{% url 'account:login' %}?next={{ request.path }}">Login</a></button></li>
+                    {# <li><button class="login_btn"><a href="{% url 'account:signin' %}?next={{ request.path }}">Login</a></button></li> #}
+                {% endif %} 
+                </ul>
+            </div>
         </div>
-    </div>
-
-    <div>
-        {% block content %}
-        {% endblock%}
-    </div>
+        <div class="content">
+            {% block content %}
+            {% endblock%}
+        </div>
     </body>
 </html>
