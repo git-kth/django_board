@@ -1,22 +1,26 @@
 {% load static %}
 <html>
     <head>
-        <title>Project</title>
-        <!-- <link rel="stylesheet" href="{% static 'style.css' %}?after"> -->
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+        <link href="{% static 'css/user-defined.css' %}" rel="stylesheet">
     </head>
-    <body>
+    <body class="p-3">
     <div class="header">
         <div class="logo">
-            <button class="home_btn">Home</button>
+            <button class="home_btn"><a href="{% url 'index:index' %}">Home</a></button>
         </div>
         <div class="menu_bar">
             <ul>
-                <li><a href="../board">게시판</a></li>
+                <li><a href="{% url 'board:index' %}">게시판</a></li>
                 <li>두번째</li>
                 <li>세번째</li>
             </ul>
         </div>
-    </div
+    </div>
 
     <div>
         {% block content %}

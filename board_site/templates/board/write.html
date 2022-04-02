@@ -1,0 +1,36 @@
+{% load static %}
+
+
+<!doctype html>
+<html lang="ko">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+        <link href="{% static 'css/user-defined.css' %}" rel="stylesheet">
+
+    </head>
+
+    <body class="p-3">
+<main>
+    <p class="lead">
+        글쓰기
+    </p>
+    <form method="post">
+        <input type="text">제목
+        <textarea id="summernote" name="editordata"></textarea>
+    </form>
+  <script>
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
+  </script>
+    <a class="btn btn-primary" href="{% url 'board:index' %}">취소</a>
+    <a class="btn btn-primary" href="{% url 'board:index' %}">등록</a>
+</main>
+    </body>
+
+
+</html>

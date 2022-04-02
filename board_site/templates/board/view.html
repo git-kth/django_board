@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+<!doctype html>
+<html lang="ko">
+{% block content %}
+<body class="p-3">
+    <main>
+        <div class="themed-container-documents">
+            <div class="row">
+                <div class="col-7">
+                    {{ board_obj.title }}
+                </div>
+                <div class="col-2">
+                {{ board_obj.name }}
+                </div>
+                <div class="col-2">
+                {{ board_obj.create_date }}
+                </div>
+                <div class="col-1">
+                    {{ board_obj.view }}
+                </div>
+            </div>
+        </div>
+        <div class="themed-container-documents">{{board_obj.contents}}</div>
+            <a class="btn btn-primary" href="{% url 'board:index' %}">목록</a>
+            <input type="text" class="form-control">
+            <a class="btn btn-primary" href="#">등록</a> 
+        </main>
+</body>
+{% endblock %}
+
+
+</html>

@@ -1,18 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block content %}
 <!doctype html>
 <html lang="ko">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-        <link href="{% static 'css/user-defined.css' %}" rel="stylesheet">
-        
-    </head>
-    
+    {% block content %}
     <body class="p-3">
         <main>
             <p class="lead">
@@ -32,7 +22,8 @@
                     {% for obj in reversed_board_obj %}
                     <tr>
                         <td>{{ obj.id }}</td>
-                        <td><a href="/board/{{obj.id}}">{{ obj.title }}</a></td>
+                        <!-- <td><a href="/board/{{obj.id}}">{{ obj.title }}</a></td> -->
+                        <td><a href="{% url 'board:detail' obj.id%}">{{ obj.title }}</a></td>
                         <td>{{ obj.name }}</td>
                         <td>{{ obj.create_date }}</td>
                     </tr>
@@ -47,10 +38,10 @@
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
             </ul>
-            <a class="btn btn-primary" href="{% url 'index_board_write' %}">글쓰기</a>
+            <a class="btn btn-primary" href="{% url 'board:write' %}">글쓰기</a>
         </main>
     </body>
+    {% endblock %}
     
     
     </html>
-    {% endblock %}
