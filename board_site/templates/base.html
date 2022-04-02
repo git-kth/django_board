@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Project</title>
-        <link rel="stylesheet" href="{% static 'style.css' %}?after">
+        <!-- <link rel="stylesheet" href="{% static 'style.css' %}?after"> -->
     </head>
     <body>
     <div class="header">
@@ -16,10 +16,11 @@
                 <li>세번째</li>
             </ul>
         </div>
-    </div>
+    </div
+
     <div>
         {% block content %}
-        {% endblock content %}
+        {% endblock%}
     </div>
     </body>
 </html>
