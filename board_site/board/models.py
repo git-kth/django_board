@@ -1,13 +1,21 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
 
-# Create your models here.
+
 class Board(models.Model):
     title = models.CharField(max_length=30)
-    name = models.CharField(max_length=40)
     contents = models.TextField()
     create_date = models.DateTimeField()
     update_date = models.DateTimeField()
     view = models.IntegerField()
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     def __str__(self) -> str:
         return self.title
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    board = models.ForeignKey(Board ,on_delete=models.CASCADE, null=True)
+    contents = models.TextField()
+    reg_date = models.DateTimeField(default=timezone.now())

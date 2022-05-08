@@ -12,5 +12,6 @@ urlpatterns = [
     path('delete/<int:idx>/',views.delete, name ="delete"),
     path('update/<int:idx>/update_form',views.update_form , name = "update_form"),
     path('update/<int:idx>',views.update , name = "update"),
-    path('page/<int:idx>/', views.paging, name="paging")
+    path('page/<int:idx>/', views.paging, name="paging"),
+    path('comment_reg/<int:idx>/',views.comment_reg, name ="comment_reg"),
 ]

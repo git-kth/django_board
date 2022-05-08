@@ -38,7 +38,7 @@
                         <td>{{ obj.id }}</td>
                         <!-- <td><a href="/board/{{obj.id}}">{{ obj.title }}</a></td> -->
                         <td><a href="{% url 'board:detail' obj.id %}">{{ obj.title }}</a></td>
-                        <td>{{ obj.name }}</td>
+                        <td>{{ obj.user }}</td>
                         {% if obj.create_date == obj.update_date %}
                             <td>{{ obj.create_date|date:'Y-m-d H:i' }}</td>
 

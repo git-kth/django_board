@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from board.models import Board
+from board.models import Board, Comment
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 def index(request, sort='id'):
     a = Board.objects.all()
@@ -23,20 +24,21 @@ def write(request):
     return render(request, 'board/write.html')
 
 def detail(request, idx):
-    board_obj = Board.objects.get(id=idx)
+    board_obj = get_object_or_404(Board, pk=idx)
     board_obj.view += 1
     board_obj.save()
     info = {'board_obj': board_obj}
     return render(request, 'board/view.html', info)
 
+@login_required(login_url='account:login')
 def add(request):
     board = Board()
-    board.name = request.POST['name']
     board.title = request.POST['title']
     board.contents = request.POST['contents']
     board.create_date = timezone.now()
     board.update_date = timezone.now()
     board.view = 0
+    board.user = request.user
     board.save()
     return redirect('board:index')
 
@@ -63,3 +65,14 @@ def paging(request, idx):
     board_obj = paginator.get_page(idx)
     info = {'board_obj': board_obj}
     return render(request, 'board/index.html', info)
+
+def comment_reg(request, idx):
+    board = get_object_or_404(Board, pk=idx)
+    comment = Comment()
+    comment.user = request.user
+    comment.contents = request.POST['comment_text']
+    # comment.reg_date = timezone.now()
+    # comment.source_number = idx
+    comment.board = board
+    comment.save()
+    return redirect('board:detail', idx=board.id)

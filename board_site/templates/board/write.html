@@ -27,10 +27,6 @@
     {% endif %}
         {% csrf_token %}
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="name" placeholder="#" value="{{ board_obj.name }}">
-            <label for="floatingInput">작성자</label>
-        </div>
-        <div class="form-floating mb-3">
             <input type="text" class="form-control" name="title" placeholder="#" value="{{ board_obj.title }}">
             <label for="floatingInput">제목</label>
         </div>
