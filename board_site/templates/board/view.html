@@ -10,10 +10,10 @@
                 <div class="col-sm-12" style="font-size: x-large; margin-bottom: 0.5em; ">
                     {{ board_obj.title }}
                 </div>
-                <div class="col-sm-6">
-                작성자: {{ board_obj.name }}
-                </div>
                 <div class="col-sm-4">
+                작성자: {{ board_obj.user.get_username }}
+                </div>
+                <div class="col-sm-6">
                 {% if board_obj.create_date == board_obj.update_date %}
                     {{ board_obj.create_date|date:'y-m-d H:i' }}
 
@@ -30,19 +30,32 @@
         <div class="themed-container-documents">{{board_obj.contents|linebreaksbr}}</div>
         <a class="btn btn-primary mb-3" href="{% url 'board:index' %}">목록</a>
         {% if user.is_authenticated %}
-        <a class="btn btn-primary mb-3" href="{% url 'board:delete' board_obj.id %}" style="float: right; margin-left: 6px;">삭제</a>
-        <a class="btn btn-primary mb-3" href="{% url 'board:update_form' board_obj.id %}" style="float: right;">수정</a>
+        <a class="delete btn btn-primary mb-3" href="javascript:void(0)" style="float: right; margin-left: 6px;"
+        data-uri="{% url 'board:delete' board_obj.id %}">삭제</a>
+        <a class="modify btn btn-primary mb-3" href="javascript:void(0)" style="float: right;"
+        data-uri="{% url 'board:update_form' board_obj.id %}">수정</a>
         {% endif %}
         
         {% for comments in board_obj.comment_set.all %}
         <div class="themed-container-documents">
             <div class="row">
                 <div class="col-sm-2">
-                    {{ comments.user }}
+                    {{ comments.user.get_username }}
                 </div>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                     {{ comments.contents }}
                 </div>
+                <div class="col-sm-2">
+                    {{ comments.reg_date|date:'y-m-d' }}
+                </div>
+                <a class="delete_comment col-sm-1" href="javascript:void(0)" 
+                data-uri="{% url 'board:comment_delete' board_obj.id comments.id %}">
+                    수정
+                </a>
+                <a class="delete_comment col-sm-1" href="javascript:void(0)" 
+                data-uri="{% url 'board:comment_delete' board_obj.id comments.id %}">
+                    삭제
+                </a>
             </div>
         </div>
         {% endfor %}
@@ -54,7 +67,6 @@
                 {{ user.get_username }}
             </div>
             <div class="form-floating mb-3">
-                <!-- <input type="hidden" name="name" value="{{ user.get_username }}"> -->
                 <input type="text" class="form-control" id="comment_text" name="comment_text" placeholder="#" required>
                 <label for="comment_text">내용</label>
             </div>
@@ -69,5 +81,38 @@
 </body>
 {% endblock %}
 
+{% block script %}
+<script>
+    // 삭제
+    var delete_elements = document.getElementsByClassName('delete');
+    Array.from(delete_elements).forEach(function(element){
+        element.addEventListener('click', function(){
+            if(confirm('정말로 삭제하시겠습니까?')){
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+
+    // 수정
+    var delete_elements = document.getElementsByClassName('modify');
+    Array.from(delete_elements).forEach(function(element){
+        element.addEventListener('click', function(){
+            if(confirm('정말로 수정하시겠습니까?')){
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+
+    // 댓글 삭제
+    var delete_elements = document.getElementsByClassName('delete_comment');
+    Array.from(delete_elements).forEach(function(element){
+        element.addEventListener('click', function(){
+            if(confirm('정말로 삭제하시겠습니까?')){
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+</script>
+{% endblock %}
 
 </html>
