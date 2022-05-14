@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 <!doctype html>
+
+<script>
+
+</script>
+
 <html lang="ko">
     {% block content %}
     <body class="p-3">
@@ -25,11 +30,11 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>글쓴이</th>
-                        <th>작성일</th>
-                        <th>조회수</th>
+                        <th class="col-sm-1">번호</th>
+                        <th class="col-sm-5">제목</th>
+                        <th class="col-sm-2">글쓴이</th>
+                        <th class="col-sm-3">작성일</th>
+                        <th class="col-sm-1">조회수</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,12 +43,12 @@
                         <td>{{ obj.id }}</td>
                         <!-- <td><a href="/board/{{obj.id}}">{{ obj.title }}</a></td> -->
                         <td><a href="{% url 'board:detail' obj.id %}">{{ obj.title }}</a></td>
-                        <td>{{ obj.user }}</td>
+                        <td>{{ obj.name }}</td>
                         {% if obj.create_date == obj.update_date %}
-                            <td>{{ obj.create_date|date:'Y-m-d H:i' }}</td>
+                            <td>{{ obj.create_date|date:'y-m-d H:i' }}</td>
 
                         {% else %}
-                            <td>{{ obj.update_date|date:'Y-m-d H:i' }}</td>
+                            <td>수정됨: {{ obj.update_date|date:'y-m-d H:i' }}</td>
 
                         {% endif %}
                         <td>{{ obj.view }}</td>
@@ -59,7 +64,9 @@
                 {% endfor %}
                 <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
             </ul>
+            {% if user.is_authenticated %}
             <a class="btn btn-primary" href="{% url 'board:write' %}">글쓰기</a>
+            {% endif %}
 
             
         </main>
@@ -67,4 +74,4 @@
     {% endblock %}
     
     
-    </html>
+</html>
