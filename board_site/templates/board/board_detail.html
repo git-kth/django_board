@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-3">
+    {% if messages %}
+    <div class="alert alert-danger my-3" role="alert">
+        {% for message in messages %}
+        <strong>{{ message.tags }}</strong>
+        <ul>
+            <li>{{ message.message }}</li>
+        </ul>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <h2 class="border-bottom py-2">{{ board.title }}</h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">{{ board.contents }}</div>
+            <div class="d-flex justify-content-end">
+                {% if board.modify_date %}
+                <div class="badge bg-light text-dark text-start mx-3">
+                    <div class="mb-2">{{ board.modify_date }}</div>
+                    <div>에 수정됨</div>
+                </div>
+                {% endif %}
+                <div class="badge bg-light text-dark p-2 text-start">
+                    <div class="mb-2">{{ board.create_date }}</div>
+                    {{ board.user.username }}이 작성함
+                </div>
+            </div>
+            <div class="my-3">
+                {% if request.user == board.user %}
+                <a href="{% url 'board:board_modify' board.id %}" class="btn btn-sm btn-outline-secondary">수정</a>
+                <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'board:board_delete' board.id %}">삭제</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    <h5 class="border-bottom my-3 py-2">{{ board.comment_set.count }}개의 답글이 있습니다.</h5>
+    {% for comment in board.comment_set.all %}
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">{{ comment.contents }}</div>
+            <div class="d-flex justify-content-end">
+                {% if comment.modify_date %}
+                <div class="badge bg-light text-dark p-2 text-start mx-3">
+                    <div class="mb-2">modified at</div>
+                    <div>{{ comment.modify_date }}</div>
+                </div>
+                {% endif %}
+                <div class="badge bg-light text-dark p-2 text-start">
+                    <div class="mb-2">{{ comment.create_date }}</div>
+                    <div>{{ comment.user.username }}이 작성함</div>
+                </div>
+            </div>
+            <div class="my-3">
+                {% if request.user == comment.user %}
+                <a href="{% url 'board:comment_modify' comment.id %}" class="btn btn-sm btn-outline-secondary">수정</a>
+                <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'board:comment_delete' comment.id %}">삭제</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <form action="{% url 'board:comment_create' board.id %}" method="post" class="my-3">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                {% for field in form %}
+                    {% if field.errors %}
+                        <div><strong>{{ field.label }}</strong>{{ field.errors }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="mb-3">
+            <label for="contents" class="form-label">답변내용</label>
+            <textarea {% if not user.is_authenticated %}disabled{% endif %} name="contents" id="contents" class="form-control" rows="10">{% if not user.is_authenticated %}로그인이 필요합니다.{% endif %}</textarea>
+        </div>
+        <input type="submit" {% if not user.is_authenticated %}disabled{% endif %} value="답변등록" class="btn btn-primary">
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    delete_elements = document.getElementsByClassName('delete');
+    Array.from(delete_elements).forEach(function(element){
+        element.addEventListener('click', function(){
+            if(confirm('정말로 삭제하시겠습니까?')){
+                location.href = this.dataset.uri;
+            }
+        });
+    });
+    recommand_elements = document.getElementsByClassName('recommand');
+    Array.from(recommand_elements).forEach(function(element){
+        element.addEventListener('click', function(){
+            if(confirm('정말로 추천하시겠습니까?')){
+                location.href = this.dataset.uri;
+            }
+        });
+    });
+</script>
+{% endblock %}

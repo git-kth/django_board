@@ -7,45 +7,34 @@
         <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
         <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
         <link href="{% static 'css/user-defined.css' %}" rel="stylesheet">
-        <link href="{% static 'style.css' %}?after" rel="stylesheet">
-
+        <link href="{% static 'style.css' %}?afafter" rel="stylesheet">
+        <title>안녕하세요</title>
     </head>
-    <body class="p-3">
+    <body>  
         <div class="header">
-            <div class="logo">
-                <button class="home_btn"><a href="{% url 'index:index' %}">Home</a></button>
-            </div>
-            <div class="menu_bar">
-                <ul>
-                    <li><a href="{% url 'board:index' %}">게시판</a></li>
-                    <li>두번째</li>
-                    <li>세번째</li>
-                </ul>
-            </div>
+            <h1><a href="{% url 'index:index' %}">Djan9oB</a></h1>
         </div>
-        <div class="side_bar">
-            <div class="profile_info">
-                <ul>
-                {% if user.is_authenticated %}
-                    <br/>
-                    <li>id: {{user.get_username}}</li>
-                    <br/>
-                    <li><button class="login_btn"><a href="{% url 'account:logout'%}?next={{ request.path }}">Logout</a></button></li>
-                {% else %}
-                    <li><button class="login_btn"><a href="{% url 'account:login' %}?next={{ request.path }}">Login</a></button></li>
-                    {# <li><button class="login_btn"><a href="{% url 'account:signin' %}?next={{ request.path }}">Login</a></button></li> #}
-                {% endif %}
-                    <li>
-                        {% if not user.is_authenticated %}
-                        <a class="nav-link" href="{% url 'account:signup' %}">signup</a> 
-                        {% endif %}
-                    </li>
-                </ul>
-            </div>
+        <div class="menu_bar">
+            <a href="#3">???</a>
+            <a href="#2">???</a>
+            <a id="board_btn" href="{% url 'board:index' %}">게시판</a>
         </div>
+        <div class="login_info">
+            {% if user.is_authenticated %}
+                <p><strong>{{ user.get_username }}</strong>&nbsp;님<br>환영합니다</p>
+                <a href="{% url 'account:logout' %}?next={{ request.path }}">Logout</a>
+            {% else %}
+                <a href="{% url 'account:login' %}?next={{ request.path }}">Sign in</a>
+                <a href="{% url 'account:signup' %}">Sign up</a>
+            {% endif %}
+        </div>
+
+
         <div class="content">
             {% block content %}
             {% endblock%}
         </div>
+        {% block script %}
+        {% endblock %}
     </body>
 </html>

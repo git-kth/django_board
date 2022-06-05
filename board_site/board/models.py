@@ -7,7 +7,7 @@ class Board(models.Model):
     title = models.CharField(max_length=30)
     contents = models.TextField()
     create_date = models.DateTimeField()
-    update_date = models.DateTimeField()
+    modify_date = models.DateTimeField(null=True, blank=True)
     view = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
@@ -18,4 +18,5 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     board = models.ForeignKey(Board ,on_delete=models.CASCADE, null=True)
     contents = models.TextField()
-    reg_date = models.DateTimeField(default=timezone.now())
+    create_date = models.DateTimeField()
+    modify_date = models.DateTimeField(null=True, blank=True)
