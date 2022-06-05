@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
-{% load board_filter %}
 {% block content %}
+    
+    <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>      
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <ul><a class="dropdown-item" href="{% url 'board:index'%}?sort=id">최근순</a></ul>
+        <ul><a class="dropdown-item" href="{% url 'board:index'%}?sort=reversed_id">오래된 순</a></ul>
+        <ul><a class="dropdown-item" href="{% url 'board:index'%}?sort=view">조회순</a></ul>
+    </ul>
     <div class="container my-3">
         <table class="table">
             <thead>
+                
             <tr class="text-center table-dark">
                 <th>번호</th>
                 <th style="width:50%">제목</th>
@@ -17,8 +24,7 @@
             {% for board in board_list %}
             <tr class="text-center">
                 <td>
-                    <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
-                    {{ board_list.paginator.count|sub:board_list.start_index|sub:forloop.counter0|add:1 }}
+                    {{ board.id }}
                 </td>
                 <td class="text-center">
                     <a href="{% url 'board:detail' board.id %}">{{ board.title }}</a>
