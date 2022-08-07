@@ -12,7 +12,7 @@ def index(request):
     page = request.GET.get('page', 1)
     paginator = Paginator(boards, 10)
     page_obj = paginator.get_page(page)
-    context = {'board_list': page_obj}
+    context = {'board_list': page_obj , 'sort': sorting}
     return render(request, 'board/board_list.html', context)
 
 def detail(request, board_id):
