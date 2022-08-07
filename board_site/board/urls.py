@@ -14,6 +14,8 @@ urlpatterns = [
     path('board_create/', board_views.board_create, name="board_create"),
     path('board_modify/<int:board_id>', board_views.board_modify, name="board_modify"),
     path('board_delete/<int:board_id>', board_views.board_delete, name="board_delete"),
+    path('board_like/<int:board_id>', board_views.board_like, name="board_like"),
+    path('board_unlike/<int:board_id>', board_views.board_unlike, name="board_unlike"),
     
     # comment_views
     path('comment_create/<int:board_id>', comment_views.comment_create, name="comment_create"),

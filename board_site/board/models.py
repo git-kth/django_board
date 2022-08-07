@@ -9,8 +9,10 @@ class Board(models.Model):
     create_date = models.DateTimeField()
     modify_date = models.DateTimeField(null=True, blank=True)
     view = models.IntegerField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    like = models.ManyToManyField(User, related_name='like_user')
+    unlike = models.ManyToManyField(User, related_name='unlike_user')
+
     def __str__(self) -> str:
         return self.title
 

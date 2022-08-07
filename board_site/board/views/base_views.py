@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
 from ..models import Board
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     boards = Board.objects.order_by('-create_date')
@@ -38,3 +39,6 @@ def detail(request, board_id):
     board.save()
     info = {'board': board}
     return render(request, 'board/board_detail.html', info)
+
+
+
