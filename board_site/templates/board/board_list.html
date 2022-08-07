@@ -3,9 +3,9 @@
     
     <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>      
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <ul><a class="dropdown-item" href="{% url 'board:index'%}?sort=id">최근순</a></ul>
-        <ul><a class="dropdown-item" href="{% url 'board:index'%}?sort=reversed_id">오래된 순</a></ul>
-        <ul><a class="dropdown-item" href="{% url 'board:index'%}?sort=view">조회순</a></ul>
+        <ul><a class="dropdown-item" href="{% url 'board:index'%}?sort=id&&kw_type={{ kw_type }}&&kw={{ kw }}">최근순</a></ul>
+        <ul><a class="dropdown-item" href="{% url 'board:index'%}?sort=reversed_id&&kw_type={{ kw_type }}&&kw={{ kw }}">오래된 순</a></ul>
+        <ul><a class="dropdown-item" href="{% url 'board:index'%}?sort=view&&kw_type={{ kw_type }}&&kw={{ kw }}">조회순</a></ul>
     </ul>
     <div class="container my-3">
         <table class="table">
@@ -48,7 +48,7 @@
             <!-- 이전페이지 -->
             {% if board_list.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ board_list.previous_page_number }}&&sort={{ sort }}">이전</a>
+                <a class="page-link" href="?page={{ board_list.previous_page_number }}&&sort={{ sort }}&&kw_type={{ kw_type }}&&kw={{ kw }}">이전</a>
             </li>
             {% else %}
             <li class="page-item disabled">
@@ -60,11 +60,11 @@
             {% if page_number >= board_list.number|add:-5 and page_number <= board_list.number|add:5 %}
                 {% if page_number == board_list.number %}
                 <li class="page-item active" aria-current="page">
-                    <a class="page-link" href="?page={{ page_number }}&&sort={{ sort }}">{{ page_number }}</a>
+                    <a class="page-link" href="?page={{ page_number }}&&sort={{ sort }}&&kw_type={{ kw_type }}&&kw={{ kw }}">{{ page_number }}</a>
                 </li>
                 {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_number }}&&sort={{ sort }}">{{ page_number }}</a>
+                    <a class="page-link" href="?page={{ page_number }}&&sort={{ sort }}&&kw_type={{ kw_type }}&&kw={{ kw }}">{{ page_number }}</a>
                 </li>
                 {% endif %}
             {% endif %}
@@ -72,7 +72,7 @@
             <!-- 다음페이지 -->
             {% if board_list.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ board_list.next_page_number }}&&sort={{ sort }}">다음</a>
+                <a class="page-link" href="?page={{ board_list.next_page_number }}&&sort={{ sort }}&&kw_type={{ kw_type }}&&kw={{ kw }}">다음</a>
             </li>
             {% else %}
             <li class="page-item disabled">
@@ -81,6 +81,16 @@
             {% endif %}
         </ul>
         <a class="btn btn-primary" href="{% url 'board:board_create' %}">글쓰기</a>
+
+        <form method="get">
+            <select name = "kw_type">
+                <option value = "title">제목</option>
+                <option value = "title_contents">제목+내용</option>
+                <option value = "user">글쓴이</option>
+            </select>
+            <input type = "search" name =  "kw">
+            <input class="btn btn-primary" type ="submit" value = "검색">
+        </form>
 
         
     </div>
