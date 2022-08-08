@@ -1,39 +1,33 @@
 {% extends 'base.html' %}
+
 {% block content %}
     
-    <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>      
+    <!-- <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>      
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=like">좋아요</a></ul>
         <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=unlike">싫어요</a></ul>
-    </ul>
+    </ul> -->
     <div class="container my-3">
         <table class="table">
             <thead>
                 
             <tr class="text-center table-dark">
-                <th>번호</th>
-                <th style="width:50%">제목</th>
-                <th>글쓴이</th>
-                <th>작성일시</th>
-                <th>조회수</th>
+                <th>유저 네임</th>
+                <th>유저 이메일</th>
+                <th>좋아요 한 게시물 수</th>
+                <th>싫어요 한 게시물 수</th>
+                <th>가입일자</th>
             </tr>
             </thead>
             <tbody>
-            {% if board_list %}
-            {% for board in board_list %}
+            {% if user_list %}
+            {% for user in user_list %}
             <tr class="text-center">
-                <td>
-                    {{ board.id }}
-                </td>
-                <td class="text-center">
-                    <a href="{% url 'board:detail' board.id %}">{{ board.title }}</a>
-                    {% if board.comment_set.count > 0 %}
-                    <span class="text-danger small mx-2">({{ board.comment_set.count }})</span>
-                    {% endif %}
-                </td>
-                <td>{{ board.user.username }}</td>
-                <td>{{ board.create_date }}</td>
-                <td>{{ board.view }}</td>
+                <td><a href="board:mypage_index?user_id={{ user.username }}">{{ user.username }}</a></td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.like_user.count }}</td>
+                <td>{{ user.unlike_user.count }}</td>
+                <td>{{ user.date_joined }}</td>
             </tr>
             {% endfor %}
             {% else %}
@@ -45,9 +39,9 @@
         </table>
         <ul class="pagination justify-content-center">
             <!-- 이전페이지 -->
-            {% if board_list.has_previous %}
+            {% if user_list.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ board_list.previous_page_number }}&&type={{ type }}&&kw_type={{ kw_type }}&&kw={{ kw }}">이전</a>
+                <a class="page-link" href="?page={{ user_list.previous_page_number }}&&type={{ type }}&&kw_type={{ kw_type }}&&kw={{ kw }}">이전</a>
             </li>
             {% else %}
             <li class="page-item disabled">
@@ -55,9 +49,9 @@
             </li>
             {% endif %}
             <!-- 페이지리스트 -->
-            {% for page_number in board_list.paginator.page_range %}
-            {% if page_number >= board_list.number|add:-5 and page_number <= board_list.number|add:5 %}
-                {% if page_number == board_list.number %}
+            {% for page_number in user_list.paginator.page_range %}
+            {% if page_number >= user_list.number|add:-5 and page_number <= user_list.number|add:5 %}
+                {% if page_number == user_list.number %}
                 <li class="page-item active" aria-current="page">
                     <a class="page-link" href="?page={{ page_number }}&&type={{ type }}&&kw_type={{ kw_type }}&&kw={{ kw }}">{{ page_number }}</a>
                 </li>
@@ -69,9 +63,9 @@
             {% endif %}
             {% endfor %}
             <!-- 다음페이지 -->
-            {% if board_list.has_next %}
+            {% if user_list.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ board_list.next_page_number }}&&type={{ type }}&&kw_type={{ kw_type }}&&kw={{ kw }}">다음</a>
+                <a class="page-link" href="?page={{ user_list.next_page_number }}&&type={{ type }}&&kw_type={{ kw_type }}&&kw={{ kw }}">다음</a>
             </li>
             {% else %}
             <li class="page-item disabled">
@@ -79,7 +73,6 @@
             </li>
             {% endif %}
         </ul>
-        
 
         <form method="get">
             <select name = "kw_type">

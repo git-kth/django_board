@@ -1,7 +1,7 @@
 from django.urls import path
 
 # from . import views
-from .views import base_views, board_views, comment_views, mypage_views
+from .views import base_views, board_views, comment_views, mypage_views, manage_views
 
 app_name = 'board'
 
@@ -24,4 +24,7 @@ urlpatterns = [
 
     # mypage_views
     path('mypage_index/', mypage_views.mypage_index, name="mypage_index"),
+
+    # manage_views
+    path('manage_index/', manage_views.manage_index, name='manage_index'),
 ]

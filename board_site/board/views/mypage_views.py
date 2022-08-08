@@ -1,16 +1,25 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render, redirect
 from board.models import Board
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 @login_required(login_url='account:login')
 def mypage_index(request):
+    if request.user.has_perm('board.manager'):
+        user_id = request.GET.get('user_id', '')
+        if user_id:
+            user = get_object_or_404(User, pk=user_id)
+        else:
+            return redirect('/')
+    else:
+        user = request.user
     type = request.GET.get('type', 'like')
     if type == 'unlike':
-        board_list = request.user.unlike_user.all()
+        board_list = user.unlike_user.all()
     else:
-        board_list = request.user.like_user.all()
+        board_list = user.like_user.all()
 
     kw_type =request.GET.get('kw_type', '')
     kw = request.GET.get('kw', '')
@@ -30,7 +39,7 @@ def mypage_index(request):
             ).distinct()
 
     board_list = board_list.order_by('-create_date')
-    
+
     page = request.GET.get('page', 1)
     paginator = Paginator(board_list, 10)
     page_obj = paginator.get_page(page)
