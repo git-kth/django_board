@@ -51,7 +51,7 @@ def board_delete(request, board_id):
 @login_required(login_url='account:login')
 def board_like(request, board_id):
     board = get_object_or_404(Board, pk=board_id)
-    if not request.user in board.unlike.all:
+    if not request.user in board.unlike.all():
         board.like.add(request.user)
 
     return redirect('board:detail', board_id)
@@ -60,7 +60,7 @@ def board_like(request, board_id):
 @login_required(login_url='account:login')
 def board_unlike(request, board_id):
     board = get_object_or_404(Board, pk=board_id)
-    if not request.user in board.like.all:
+    if not request.user in board.like.all():
         board.unlike.add(request.user)
 
     return redirect('board:detail', board_id)

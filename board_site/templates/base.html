@@ -22,6 +22,7 @@
         <div class="login_info">
             {% if user.is_authenticated %}
                 <p><strong>{{ user.get_username }}</strong>&nbsp;님<br>환영합니다</p>
+                <a href = "{% url 'board:mypage_index'%}" >마이페이지</a>
                 <a href="{% url 'account:logout' %}?next={{ request.path }}">Logout</a>
             {% else %}
                 <a href="{% url 'account:login' %}?next={{ request.path }}">Sign in</a>

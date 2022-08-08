@@ -124,9 +124,9 @@
             }
         });
     });
-    {%else%}
+    {% else %}
         document.querySelector(".like").removeAttribute('href');
-    {%endif%}
+    {% endif %}
 
     unlike_elements = document.getElementsByClassName('unlike');
     {% if user.is_authenticated %}
@@ -137,8 +137,8 @@
             }
         });
     });
-    {%else%}
+    {% else %}
         document.querySelector(".unlike").removeAttribute('href');
-    {%endif%}
+    {% endif %}
 </script>
 {% endblock %}

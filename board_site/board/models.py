@@ -16,6 +16,9 @@ class Board(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    class Meta:
+        permissions = (("manager", "manager on site"),)
+
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     board = models.ForeignKey(Board ,on_delete=models.CASCADE, null=True)

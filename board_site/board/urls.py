@@ -1,7 +1,7 @@
 from django.urls import path
 
 # from . import views
-from .views import base_views, board_views, comment_views
+from .views import base_views, board_views, comment_views, mypage_views
 
 app_name = 'board'
 
@@ -21,4 +21,7 @@ urlpatterns = [
     path('comment_create/<int:board_id>', comment_views.comment_create, name="comment_create"),
     path('comment_modify/<int:comment_id>', comment_views.comment_modify, name="comment_modify"),
     path('comment_delete/<int:comment_id>', comment_views.comment_delete, name="comment_delete"),
+
+    # mypage_views
+    path('mypage_index/', mypage_views.mypage_index, name="mypage_index"),
 ]
