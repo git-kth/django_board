@@ -12,7 +12,7 @@ def mypage_index(request):
         if user_id:
             user = get_object_or_404(User, pk=user_id)
         else:
-            return redirect('/')
+            return redirect('board:manage_index')
     else:
         user = request.user
     type = request.GET.get('type', 'like')
@@ -43,6 +43,6 @@ def mypage_index(request):
     page = request.GET.get('page', 1)
     paginator = Paginator(board_list, 10)
     page_obj = paginator.get_page(page)
-    context = {'board_list': page_obj , 'kw': kw, 'kw_type': kw_type, 'type': type}
+    context = {'board_list': page_obj , 'kw': kw, 'kw_type': kw_type, 'type': type, 'user_id': user.id,}
 
     return render(request, 'board/mypage_index.html', context)

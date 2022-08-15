@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from ..models import Board
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 def index(request):
     boards = Board.objects.order_by('-create_date')
@@ -30,7 +31,8 @@ def index(request):
     page = request.GET.get('page', 1)
     paginator = Paginator(boards, 10)
     page_obj = paginator.get_page(page)
-    context = {'board_list': page_obj , 'sort': sorting, 'kw': kw, 'kw_type': kw_type}
+    manager = User.objects.get(username="manager")
+    context = {'board_list': page_obj , 'sort': sorting, 'kw': kw, 'kw_type': kw_type, 'manager': manager, }
     return render(request, 'board/board_list.html', context)
 
 def detail(request, board_id):

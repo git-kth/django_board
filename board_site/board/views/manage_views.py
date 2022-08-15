@@ -6,8 +6,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.models import User
 
-@permission_required('board.manager', raise_exception=False)
 @login_required(login_url='account:login')
+@permission_required('board.manager', raise_exception=False, login_url='board:mypage_index')
 def manage_index(request):
     user_list = User.objects.order_by('username').filter(
         ~Q(user_permissions__codename='manager') & ~Q(is_superuser=True)

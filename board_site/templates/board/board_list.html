@@ -8,6 +8,46 @@
         <ul><a class="dropdown-item" href="{% url 'board:index'%}?sort=view&&kw_type={{ kw_type }}&&kw={{ kw }}">조회순</a></ul>
     </ul>
     <div class="container my-3">
+        <fieldset>
+            <legend>※공지사항※</legend>
+            <table class="table notice">
+                <thead>
+                    <tr class="text-center table-dark">
+                        <th>번호</th>
+                        <th style="width:50%">제목</th>
+                        <th>글쓴이</th>
+                        <th>작성일시</th>
+                        <th>조회수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if manager.user.all %}
+                        {% for admin_board in manager.user.all %}
+                            <tr class="text-center">
+                                <td>
+                                    {{ admin_board.id }}
+                                </td>
+                                <td class="text-center">
+                                    <a href="{% url 'board:detail' admin_board.id %}">{{ admin_board.title }}</a>
+                                    {% if admin_board.comment_set.count > 0 %}
+                                    <span class="text-danger small mx-2">({{ admin_board.comment_set.count }})</span>
+                                    {% endif %}
+                                </td>
+                                <td>관리자</td>
+                                <td>{{ admin_board.create_date }}</td>
+                                <td>{{ admin_board.view }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="5">게시글이 없습니다.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>            
+        </fieldset>
+        <fieldset>
+            <legend>게시판</legend>
         <table class="table">
             <thead>
                 
@@ -44,6 +84,7 @@
             {% endif %}
             </tbody>
         </table>
+    </fieldset>
         <ul class="pagination justify-content-center">
             <!-- 이전페이지 -->
             {% if board_list.has_previous %}

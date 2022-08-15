@@ -2,11 +2,11 @@
 
 {% block content %}
     
-    <!-- <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>      
+    {% comment %} <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>      
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=like">좋아요</a></ul>
-        <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=unlike">싫어요</a></ul>
-    </ul> -->
+        <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=like&user_id={{ user_id }}">좋아요</a></ul>
+        <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=unlike&user_id={{ user_id }}">싫어요</a></ul>
+    </ul> {% endcomment %}
     <div class="container my-3">
         <table class="table">
             <thead>
@@ -23,7 +23,7 @@
             {% if user_list %}
             {% for user in user_list %}
             <tr class="text-center">
-                <td><a href="board:mypage_index?user_id={{ user.username }}">{{ user.username }}</a></td>
+                <td><a href="{% url 'board:mypage_index' %}?user_id={{ user.id }}">{{ user.username }}</a></td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.like_user.count }}</td>
                 <td>{{ user.unlike_user.count }}</td>

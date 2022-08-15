@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
     
-    <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>      
+    <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        {% if type == 'unlike' %}
+            싫어요
+        {% else %}
+            좋아요
+        {% endif %}
+    </a>      
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=like">좋아요</a></ul>
-        <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=unlike">싫어요</a></ul>
+        <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=like&user_id={{ user_id }}">좋아요</a></ul>
+        <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=unlike&user_id={{ user_id }}">싫어요</a></ul>
     </ul>
     <div class="container my-3">
         <table class="table">
