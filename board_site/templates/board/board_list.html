@@ -21,8 +21,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% if manager.user.all %}
-                        {% for admin_board in manager.user.all %}
+                    {% if manager.board_user.all %}
+                        {% for admin_board in manager.board_user.all %}
                             <tr class="text-center">
                                 <td>
                                     {{ admin_board.id }}
