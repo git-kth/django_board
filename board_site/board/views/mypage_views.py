@@ -12,14 +12,21 @@ def mypage_index(request):
         if user_id:
             user = get_object_or_404(User, pk=user_id)
         else:
-            return redirect('board:manage_index')
+            user = request.user
     else:
         user = request.user
-    type = request.GET.get('type', 'like')
+    type = request.GET.get('type', 'board')
     if type == 'unlike':
         board_list = user.unlike_user.all()
-    else:
+    elif type == 'like':
         board_list = user.like_user.all()
+    elif type == 'comment':
+        board_list = Board.objects.order_by('-create_date').filter(
+            Q(comment__user__id=user.id)
+        ).distinct()
+    else:
+        board_list = user.board_user.all()
+
 
     kw_type =request.GET.get('kw_type', '')
     kw = request.GET.get('kw', '')

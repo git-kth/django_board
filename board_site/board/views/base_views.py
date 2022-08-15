@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 
 def index(request):
     boards = Board.objects.order_by('-create_date')
+    boards = boards.filter(
+        ~Q(user__user_permissions__codename='manager')
+    ).distinct()
     kw_type =request.GET.get('kw_type', '')
     kw = request.GET.get('kw', '')
     if kw:

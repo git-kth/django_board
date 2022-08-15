@@ -2,22 +2,18 @@
 
 {% block content %}
     
-    {% comment %} <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">정렬</a>      
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=like&user_id={{ user_id }}">좋아요</a></ul>
-        <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=unlike&user_id={{ user_id }}">싫어요</a></ul>
-    </ul> {% endcomment %}
     <div class="container my-3">
         <table class="table">
-            <thead>
-                
-            <tr class="text-center table-dark">
-                <th>유저 네임</th>
-                <th>유저 이메일</th>
-                <th>좋아요 한 게시물 수</th>
-                <th>싫어요 한 게시물 수</th>
-                <th>가입일자</th>
-            </tr>
+            <thead>    
+                <tr class="text-center table-dark">
+                    <th>유저 네임</th>
+                    <th>유저 이메일</th>
+                    <th>작성한 게시물 수</th>
+                    <th>작성한 댓글 수</th>
+                    <th>좋아요 한 게시물 수</th>
+                    <th>싫어요 한 게시물 수</th>
+                    <th>가입일자</th>
+                </tr>
             </thead>
             <tbody>
             {% if user_list %}
@@ -25,6 +21,8 @@
             <tr class="text-center">
                 <td><a href="{% url 'board:mypage_index' %}?user_id={{ user.id }}">{{ user.username }}</a></td>
                 <td>{{ user.email }}</td>
+                <td>{{ user.board_user.count }}</td>
+                <td>{{ user.comment_set.count }}</td>
                 <td>{{ user.like_user.count }}</td>
                 <td>{{ user.unlike_user.count }}</td>
                 <td>{{ user.date_joined }}</td>
@@ -32,7 +30,7 @@
             {% endfor %}
             {% else %}
             <tr>
-                <td colspan="5">게시글이 없습니다.</td>
+                <td colspan="7">게시글이 없습니다.</td>
             </tr>
             {% endif %}
             </tbody>

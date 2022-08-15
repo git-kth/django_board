@@ -2,13 +2,19 @@
 {% block content %}
     
     <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-        {% if type == 'unlike' %}
-            싫어요
-        {% else %}
+        {% if type == 'like' %}
             좋아요
+        {%elif type == 'unlike'%}
+            싫어요
+        {%elif type == 'comment'%}
+            댓글 단 글
+        {% else %}
+            작성한 글
         {% endif %}
-    </a>      
+    </a>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=board&user_id={{ user_id }}">작성한 글</a></ul>
+        <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=comment&user_id={{ user_id }}">댓글 단 글</a></ul>
         <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=like&user_id={{ user_id }}">좋아요</a></ul>
         <ul><a class="dropdown-item" href="{% url 'board:mypage_index'%}?type=unlike&user_id={{ user_id }}">싫어요</a></ul>
     </ul>
@@ -87,17 +93,7 @@
         </ul>
         
 
-        <form method="get">
-            <select name = "kw_type">
-                <option value = "title">제목</option>
-                <option value = "title_contents">제목+내용</option>
-                <option value = "user">글쓴이</option>
-            </select>
-            <input type = "search" name =  "kw">
-            <input type = "hidden" name = "type" value = "{{ type }}">
-            <input class="btn btn-primary" type ="submit" value = "검색">
-        </form>
-
+        {% include 'search_form.html' %}
         
     </div>
     <script>
